@@ -1,7 +1,10 @@
 import './App.css';
-import Pie from './components/pie-chart';
+import BarChart from './components/bar-chart';
+import React from 'react';
 
-const data = [
+const data = [490, 291, 348, 245, 50]
+
+const datas = [
   { item: 'Redmi', count: 490 },
   { item: 'Huawei', count: 291 },
   { item: 'IPhone', count: 348 },
@@ -10,10 +13,12 @@ const data = [
 ];
 
 function App() {
+
+  
   return (
     <>
       <h1>D3 demo</h1>
-      <Pie data={data} />
+      <BarChart width={600} height={400} data={data} />
     </>
   );
 }
