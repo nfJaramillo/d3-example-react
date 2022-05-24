@@ -1,63 +1,36 @@
-// BarChart.js
-import * as d3 from 'd3';
-import React, { useRef, useEffect } from 'react';
+import * as React from 'react';
+import {
+  Chart,
+  BarSeries,
+  Title,
+  ArgumentAxis,
+  ValueAxis,
+} from '@devexpress/dx-react-chart-bootstrap4';
+import '@devexpress/dx-react-chart-bootstrap4/dist/dx-react-chart-bootstrap4.css';
+import { Animation } from '@devexpress/dx-react-chart';
 
-function BarChart({ width, height, data }){
-    const ref = useRef();
 
-    useEffect(() => {
-        const svg = d3.select(ref.current)
-            .attr("width", width)
-            .attr("height", height)
-            .style("border", "1px solid black")
-    }, []);
 
-    useEffect(() => {
-        draw();
-    }, [data]);
-
-    const draw = () => {
-        
-        const svg = d3.select(ref.current);
-        var selection = svg.selectAll("rect").data(data);
-        var yScale = d3.scaleLinear()
-                            .domain([0, d3.max(data)])
-                            .range([0, height-100]);
-        
-        selection
-            .transition().duration(300)
-                .attr("height", (d) => yScale(d))
-                .attr("y", (d) => height - yScale(d))
-
-        selection
-            .enter()
-            .append("rect")
-            .attr("x", (d, i) => i * 45)
-            .attr("y", (d) => height)
-            .attr("width", 40)
-            .attr("height", 0)
-            .attr("fill", "orange")
-            .transition().duration(300)
-                .attr("height", (d) => yScale(d))
-                .attr("y", (d) => height - yScale(d))
-        
-        selection
-            .exit()
-            .transition().duration(300)
-                .attr("y", (d) => height)
-                .attr("height", 0)
-            .remove()
-    }
-
+const Bar =({pData}) => {
 
     return (
-        <div className="chart">
-            <svg ref={ref}>
-            </svg>
-        </div>
-        
-    )
+      <div className="card">
+        <Chart
+          data={pData}
+        >
+          <ArgumentAxis />
+          <ValueAxis max={7} />
 
-}
+          <BarSeries
+            valueField="count"
+            argumentField="item"
+            color='red'
+          />
+          <Title text="World population" />
+          <Animation />
+        </Chart>
+      </div>
+    );
+  }
 
-export default BarChart;
+  export default Bar;
